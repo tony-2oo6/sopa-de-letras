@@ -6,7 +6,7 @@ package javaapplication10;
 
 /**
  *
- * @author adcd_
+ * @author Antonio Yibirin, Nicolas Mendez
  */
 public class Buscar2 extends javax.swing.JFrame {
 
