@@ -4,12 +4,28 @@
  */
 package javaapplication10;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 /**
  *
  * @author Antonio Yibirin, Nicolas Mendez
  */
 public class Inicio extends javax.swing.JFrame {
 
+    
+    char[][] tablero;
+    String[] diccionario;
+    int[] totalDic;
+    Grafo grafo;
     /**
      * Creates new form Inicio
      */
@@ -59,6 +75,11 @@ public class Inicio extends javax.swing.JFrame {
         jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 160, -1, -1));
 
         jButton3.setText("Cargar informacion");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 200, -1, -1));
 
         jLabel2.setText("Antonio Yibirin, y Nicolas Mendez");
@@ -78,6 +99,71 @@ public class Inicio extends javax.swing.JFrame {
         buscar1 buscar = new buscar1();
         buscar.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        diccionario = new String[10];
+        tablero = new char[4][4];
+        totalDic = new int[1];
+        
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Selecciona el archivo .txt");
+
+        // Filtro para solo mostrar archivos .txt
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos de texto (*.txt)", "txt");
+        fileChooser.setFileFilter(filtro);
+
+        int resultado = fileChooser.showOpenDialog(this);
+
+        if (resultado == JFileChooser.APPROVE_OPTION) {
+            File archivoSeleccionado = fileChooser.getSelectedFile();
+
+            BufferedReader br = null;
+            try {
+                br = new BufferedReader(new FileReader(archivoSeleccionado));
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this, "Archivo no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            String linea;
+            boolean leyendoDic = false, leyendoTab = false;
+            int contadorDic = 0;
+
+            try {
+                while ((linea = br.readLine()) != null) {
+                    if (linea.equalsIgnoreCase("dic")) {
+                        leyendoDic = true;
+                    } else if (linea.equalsIgnoreCase("/dic")) {
+                        leyendoDic = false;
+                    } else if (linea.equalsIgnoreCase("tab")) {
+                        leyendoTab = true;
+                    } else if (linea.equalsIgnoreCase("/tab")) {
+                        leyendoTab = false;
+                    } else if (leyendoDic) {
+                        diccionario[contadorDic++] = linea.trim().toUpperCase();
+                    } else if (leyendoTab) {
+                        String[] letras = linea.split(",");
+                        for (int i = 0; i < 16; i++) {
+                            tablero[i / 4][i % 4] = letras[i].trim().charAt(0);
+                        }
+                    }
+                }
+
+                br.close();
+                totalDic[0] = contadorDic;
+
+                JOptionPane.showMessageDialog(this, "Archivo cargado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                
+                grafo = new Grafo(tablero);
+                
+
+            } catch (IOException ex) {
+                Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this, "Error al leer el archivo.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
