@@ -220,7 +220,11 @@ public class Grafo {
         return false;
     }
 
-
+    /**
+    * Muestra gráficamente el grafo usando la biblioteca GraphStream.
+    * Crea nodos y aristas a partir de la matriz de nodos y los presenta
+    * en una ventana con estilo visual personalizado.
+    */
     public void mostrar() {
         System.setProperty("org.graphstream.ui", "swing"); // Para evitar problemas con JavaFX
         this.graph = new SingleGraph("Sopa de Letras");
@@ -296,14 +300,24 @@ public class Grafo {
     }
     
     
-    
+    /**
+    * Cambia el color de un nodo en el grafo visual utilizando su ID.
+    *
+    * @param id    ID del nodo en el grafo (formato: "fila_columna").
+    * @param color Color que se desea aplicar al nodo (por ejemplo: "red", "green").
+    */
     private void pintarNodo(String id, String color) {
         Node nodo = graph.getNode(id);
         if (nodo != null) {
             nodo.setAttribute("ui.style", "fill-color: " + color + ";");
         }
     }
-
+    
+    /**
+     * Detiene la ejecución del hilo actual durante una cantidad específica de milisegundos.
+     *
+     * @param ms Tiempo en milisegundos que se desea esperar.
+     */
     private void esperar(int ms) {
         try {
             Thread.sleep(ms);
@@ -312,6 +326,14 @@ public class Grafo {
         }
     }
     
+    /**
+     * Realiza una búsqueda por anchura (BFS) visual en el grafo para encontrar una palabra.
+     * Los nodos recorridos se pintan de rojo temporalmente, y si se encuentra la palabra,
+     * los nodos del camino se marcan en verde antes de restaurar su color.
+     * 
+     * @param palabra La palabra que se desea buscar en el grafo.
+     * @return true si la palabra se encuentra, false en caso contrario.
+     */
     public boolean bfs2(String palabra) {
     int maxCola = 1000;
     Nodo[] nodosCola = new Nodo[maxCola];
