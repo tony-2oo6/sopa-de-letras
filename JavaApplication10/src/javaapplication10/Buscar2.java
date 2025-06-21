@@ -124,7 +124,21 @@ public class Buscar2 extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        for (int i=0; i<diccionario.length; i++){
+            if (diccionario[i] != null){
+                boolean r = this.grafo.dfs(diccionario[i].toUpperCase());
+
+                if (r==true){
+                    String info = respuesta.getText();
+                    respuesta.setText("Se ha encontrado la plabra: " + diccionario[i].toUpperCase() + "\n" + info);
+
+                }else{
+                    String info = respuesta.getText();
+                    respuesta.setText("No se ha encontrado la plabra: " + diccionario[i].toUpperCase() + "\n" + info);
+
+                }
+            }
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**

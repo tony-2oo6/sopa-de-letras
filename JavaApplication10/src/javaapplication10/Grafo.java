@@ -167,11 +167,40 @@ public class Grafo {
                 if (nodos[i][j].letra == palabra.charAt(0)) {
                     boolean[][] visitados = new boolean[4][4];
                     visitados[i][j] = true;
+                    if (dfsDesde(nodos[i][j], palabra, 1, visitados)) {
+                        return true;
+                    }
                 }
             }
         }
         return false;
     }
+    
+    private boolean dfsDesde(Nodo actual, String palabra, int indice, boolean[][] visitados) {
+        if (indice == palabra.length()) {
+            return true;
+        }
+
+        NodoAdyacente ady = actual.primero;
+        while (ady != null) {
+            Nodo sig = ady.destino;
+            int f = sig.fila;
+            int c = sig.columna;
+
+            if (!visitados[f][c] && sig.letra == palabra.charAt(indice)) {
+                visitados[f][c] = true;
+                if (dfsDesde(sig, palabra, indice + 1, visitados)) {
+                    return true;
+                }
+                visitados[f][c] = false; // backtrack
+            }
+
+            ady = ady.siguiente;
+        }
+
+        return false;
+    }
+
 
 
 
