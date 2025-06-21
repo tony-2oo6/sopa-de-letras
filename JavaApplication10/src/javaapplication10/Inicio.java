@@ -92,7 +92,7 @@ public class Inicio extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         if (grafo != null){
-            Buscar2 buscar = new Buscar2();
+            Buscar2 buscar = new Buscar2(grafo, diccionario);
             buscar.setVisible(true);
         }else{
             JOptionPane.showMessageDialog(this, "Debe cargar un archivo primero", "Éxito", JOptionPane.INFORMATION_MESSAGE);

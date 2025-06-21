@@ -9,12 +9,17 @@ package javaapplication10;
  * @author Antonio Yibirin, Nicolas Mendez
  */
 public class Buscar2 extends javax.swing.JFrame {
-
+    
+    public static Grafo grafo;
+    public static String[] diccionario;
+    
     /**
      * Creates new form Buscar2
      */
-    public Buscar2() {
+    public Buscar2(Grafo grafo, String[] diccionario) {
         initComponents();
+        this.grafo = grafo;
+        this.diccionario = diccionario;
     }
 
     /**
@@ -30,7 +35,7 @@ public class Buscar2 extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        respuesta = new javax.swing.JTextArea();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
 
@@ -50,9 +55,9 @@ public class Buscar2 extends javax.swing.JFrame {
         });
         jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 80, -1, -1));
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        respuesta.setColumns(20);
+        respuesta.setRows(5);
+        jScrollPane1.setViewportView(respuesta);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, 320, 130));
 
@@ -97,8 +102,21 @@ public class Buscar2 extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        for (int i=0; i<diccionario.length; i++){
+            if (diccionario[i] != null){
+                boolean r = this.grafo.bfs(diccionario[i].toUpperCase());
 
-        // TODO add your handling code here:
+                if (r==true){
+                    String info = respuesta.getText();
+                    respuesta.setText("Se ha encontrado la plabra: " + diccionario[i].toUpperCase() + "\n" + info);
+
+                }else{
+                    String info = respuesta.getText();
+                    respuesta.setText("No se ha encontrado la plabra: " + diccionario[i].toUpperCase() + "\n" + info);
+
+                }
+            }
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -139,7 +157,7 @@ public class Buscar2 extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Buscar2().setVisible(true);
+                new Buscar2(grafo, diccionario).setVisible(true);
             }
         });
     }
@@ -151,6 +169,6 @@ public class Buscar2 extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextArea respuesta;
     // End of variables declaration//GEN-END:variables
 }
