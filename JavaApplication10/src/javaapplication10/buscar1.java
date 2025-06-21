@@ -92,6 +92,10 @@ public class buscar1 extends javax.swing.JFrame {
             buscador.setText("");
         }
         
+        
+        
+        this.grafo.mostrar();
+        
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 

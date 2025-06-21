@@ -3,6 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package javaapplication10;
+import org.graphstream.graph.*;
+import org.graphstream.graph.implementations.*;
+
 
 /**
  *
@@ -217,6 +220,78 @@ public class Grafo {
     }
 
 
+    public void mostrar() {
+        System.setProperty("org.graphstream.ui", "swing"); // Para evitar problemas con JavaFX
+        Graph graph = new SingleGraph("Sopa de Letras");
 
+        // 1. Agregar nodos
+        for (int i = 0; i < nodos.length; i++) {
+            for (int j = 0; j < nodos[i].length; j++) {
+                Nodo n = nodos[i][j];
+                String id = n.fila + "_" + n.columna;
+                Node node = graph.addNode(id);
+                node.setAttribute("ui.label", n.letra + " (" + i + "," + j + ")");
+            }
+        }
+
+        // 2. Agregar aristas
+        for (int i = 0; i < nodos.length; i++) {
+            for (int j = 0; j < nodos[i].length; j++) {
+                Nodo origen = nodos[i][j];
+                NodoAdyacente ady = origen.primero;
+                while (ady != null) {
+                    Nodo destino = ady.destino;
+                    String id1 = origen.fila + "_" + origen.columna;
+                    String id2 = destino.fila + "_" + destino.columna;
+
+                    String edgeId = id1 + "-" + id2;
+                    String reverseId = id2 + "-" + id1;
+
+                    if (graph.getEdge(edgeId) == null && graph.getEdge(reverseId) == null) {
+                        graph.addEdge(edgeId, id1, id2);
+                    }
+
+                    ady = ady.siguiente;
+                }
+            }
+        }
+
+        // 3. Estilo opcional
+        graph.setAttribute("ui.stylesheet", """
+            node {
+                fill-color: lightblue;
+                size: 35px;
+                text-size: 16px;
+            }
+            edge {
+                fill-color: gray;
+            }
+        """);
+
+        // 4. Mostrar
+        graph.display();
+        
+        new Thread(() -> {
+        try {
+            // Espera 2 segundos luego de mostrar el grafo
+            Thread.sleep(2000);
+
+            // Nodo con ID fila_columna
+            String id = "1_1"; // cambia esto por el que quieras pintar
+            Node nodo = graph.getNode(id);
+            if (nodo != null) {
+                nodo.setAttribute("ui.style", "fill-color: red;");
+            }
+
+            // Mantener en rojo por 1.5 segundos
+            Thread.sleep(1500);
+
+            // Restaurar color original
+            nodo.setAttribute("ui.style", "fill-color: lightblue;");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }).start();
+    }
 
 }
