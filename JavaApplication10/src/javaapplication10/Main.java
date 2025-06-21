@@ -6,7 +6,7 @@ package javaapplication10;
 
 /**
  *
- * @author Antonio Yibirin, Nicolas Mendez
+ * @author Antonio Yibirin, Nicolas Mendez, Antonio Guzzo
  */
 public class Main {
 

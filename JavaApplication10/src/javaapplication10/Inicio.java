@@ -17,7 +17,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
- * @author Antonio Yibirin, Nicolas Mendez
+ * @author Antonio Yibirin, Nicolas Mendez, Antonio Guzzo
  */
 public class Inicio extends javax.swing.JFrame {
 
@@ -82,8 +82,8 @@ public class Inicio extends javax.swing.JFrame {
         });
         jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 200, -1, -1));
 
-        jLabel2.setText("Antonio Yibirin, y Nicolas Mendez");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 290, -1, 20));
+        jLabel2.setText("Antonio Yibirin, Nicolas Mendez, Antonio Guzzo");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 270, -1, 20));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 441, 326));
 
