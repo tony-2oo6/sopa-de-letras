@@ -46,4 +46,74 @@ public class Grafo {
         nuevo.siguiente = origen.primero;
         origen.primero = nuevo;
     }
+    
+    public boolean bfs(String palabra) {
+        int maxCola = 1000;
+        Nodo[] nodosCola = new Nodo[maxCola];
+        int[] indices = new int[maxCola];
+        boolean[][][] visitadosCola = new boolean[maxCola][4][4];
+
+        int frente = 0;
+        int fin = 0;
+
+        // Buscar cada posible inicio
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                if (nodos[i][j].letra == palabra.charAt(0)) {
+                    nodosCola[fin] = nodos[i][j];
+                    indices[fin] = 1; // ya acertamos la primera letra
+
+                    boolean[][] visitados = new boolean[4][4];
+                    visitados[i][j] = true;
+                    copiarMatriz(visitados, visitadosCola[fin]);
+
+                    fin++;
+                }
+            }
+        }
+
+        while (frente < fin) {
+            Nodo actual = nodosCola[frente];
+            int indice = indices[frente];
+            boolean[][] visitados = visitadosCola[frente];
+            frente++;
+
+            if (indice == palabra.length()) {
+                return true;
+            }
+
+            NodoAdyacente ady = actual.primero;
+            while (ady != null) {
+                Nodo sig = ady.destino;
+                int f = sig.fila;
+                int c = sig.columna;
+
+                if (!visitados[f][c] && sig.letra == palabra.charAt(indice)) {
+                    nodosCola[fin] = sig;
+                    indices[fin] = indice + 1;
+
+                    boolean[][] nuevoVisitados = new boolean[4][4];
+                    copiarMatriz(visitados, nuevoVisitados);
+                    nuevoVisitados[f][c] = true;
+                    copiarMatriz(nuevoVisitados, visitadosCola[fin]);
+
+                    fin++;
+                }
+
+                ady = ady.siguiente;
+            }
+        }
+
+        return false;
+    }
+    
+    private void copiarMatriz(boolean[][] origen, boolean[][] destino) {
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                destino[i][j] = origen[i][j];
+            }
+        }
+    }
+
+
 }

@@ -155,6 +155,9 @@ public class Inicio extends javax.swing.JFrame {
 
                 JOptionPane.showMessageDialog(this, "Archivo cargado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                 
+                for (int i=0; i<16; i++){
+                    System.out.println(tablero[i / 4][i % 4]);
+                }
                 grafo = new Grafo(tablero);
                 
 
