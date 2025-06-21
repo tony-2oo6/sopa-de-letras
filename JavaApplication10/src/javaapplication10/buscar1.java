@@ -82,9 +82,16 @@ public class buscar1 extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String buscadorInfo = buscador.getText();
-        boolean r = this.grafo.bfs(buscadorInfo);
+        boolean r = this.grafo.bfs(buscadorInfo.toUpperCase());
         
-        respuesta.setText(String.valueOf(r));
+        if (r==true){
+            respuesta.setText("Se ha encontrado la plabra: " + buscadorInfo.toUpperCase());
+            buscador.setText("");
+        }else{
+            respuesta.setText("No se ha encontrado la plabra: " + buscadorInfo.toUpperCase());
+            buscador.setText("");
+        }
+        
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
