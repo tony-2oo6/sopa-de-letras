@@ -17,6 +17,7 @@ public class buscar1 extends javax.swing.JFrame {
      */
     public buscar1(Grafo grafo) {
         initComponents();
+        this.grafo = grafo;
     }
 
     /**
@@ -81,7 +82,7 @@ public class buscar1 extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String buscadorInfo = buscador.getText();
-        boolean r = grafo.bfs(buscadorInfo);
+        boolean r = this.grafo.bfs(buscadorInfo);
         
         respuesta.setText(String.valueOf(r));
         // TODO add your handling code here:
