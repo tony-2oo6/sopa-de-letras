@@ -129,6 +129,24 @@ public class Buscar2 extends javax.swing.JFrame {
         
         
         this.grafo.mostrar();
+
+        new Thread(() -> {
+            try {
+                Thread.sleep(1000); // Espera a que el grafo se dibuje
+
+                for (int i = 0; i < diccionario.length; i++) {
+                    if (diccionario[i] != null) {
+                        String palabra = diccionario[i].toUpperCase();
+                        System.out.println("Buscando: " + palabra);
+                        boolean r = this.grafo.bfs2(palabra);
+                        Thread.sleep(1000); // Espera entre palabras para que se vea bien
+                    }
+                }
+
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }).start();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

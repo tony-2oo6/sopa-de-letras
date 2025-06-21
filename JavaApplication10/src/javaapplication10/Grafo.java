@@ -25,6 +25,7 @@ public class Grafo {
     *   Declaracion de Variable
     */
     Nodo[][] nodos = new Nodo[4][4]; // Matriz de nodos (grafo implícito en forma de matriz)
+    private Graph graph;
     
     
      /**
@@ -222,7 +223,7 @@ public class Grafo {
 
     public void mostrar() {
         System.setProperty("org.graphstream.ui", "swing"); // Para evitar problemas con JavaFX
-        Graph graph = new SingleGraph("Sopa de Letras");
+        this.graph = new SingleGraph("Sopa de Letras");
 
         // 1. Agregar nodos
         for (int i = 0; i < nodos.length; i++) {
@@ -271,27 +272,120 @@ public class Grafo {
         // 4. Mostrar
         graph.display();
         
-        new Thread(() -> {
-        try {
-            // Espera 2 segundos luego de mostrar el grafo
-            Thread.sleep(2000);
-
-            // Nodo con ID fila_columna
-            String id = "1_1"; // cambia esto por el que quieras pintar
-            Node nodo = graph.getNode(id);
-            if (nodo != null) {
-                nodo.setAttribute("ui.style", "fill-color: red;");
-            }
-
-            // Mantener en rojo por 1.5 segundos
-            Thread.sleep(1500);
-
-            // Restaurar color original
-            nodo.setAttribute("ui.style", "fill-color: lightblue;");
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+//        new Thread(() -> {
+//        try {
+//            // Espera 2 segundos luego de mostrar el grafo
+//            Thread.sleep(2000);
+//
+//            // Nodo con ID fila_columna
+//            String id = "1_1"; // cambia esto por el que quieras pintar
+//            Node nodo = graph.getNode(id);
+//            if (nodo != null) {
+//                nodo.setAttribute("ui.style", "fill-color: red;");
+//            }
+//
+//            // Mantener en rojo por 1.5 segundos
+//            Thread.sleep(1500);
+//
+//            // Restaurar color original
+//            nodo.setAttribute("ui.style", "fill-color: lightblue;");
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//    }).start();
+    }
+    
+    
+    
+    private void pintarNodo(String id, String color) {
+        Node nodo = graph.getNode(id);
+        if (nodo != null) {
+            nodo.setAttribute("ui.style", "fill-color: " + color + ";");
         }
-    }).start();
     }
 
+    private void esperar(int ms) {
+        try {
+            Thread.sleep(ms);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
+    
+    public boolean bfs2(String palabra) {
+    int maxCola = 1000;
+    Nodo[] nodosCola = new Nodo[maxCola];
+    int[] indices = new int[maxCola];
+    boolean[][][] visitadosCola = new boolean[maxCola][4][4];
+    int frente = 0;
+    int fin = 0;
+
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            if (nodos[i][j].letra == palabra.charAt(0)) {
+                nodosCola[fin] = nodos[i][j];
+                indices[fin] = 1;
+                boolean[][] visitados = new boolean[4][4];
+                visitados[i][j] = true;
+                copiarMatriz(visitados, visitadosCola[fin]);
+                fin++;
+            }
+        }
+    }
+
+    while (frente < fin) {
+        Nodo actual = nodosCola[frente];
+        int indice = indices[frente];
+        boolean[][] visitados = visitadosCola[frente];
+        frente++;
+
+        // Pintar el nodo actual de rojo
+        String id = actual.fila + "_" + actual.columna;
+        pintarNodo(id, "red");
+        esperar(400); // espera 0.4 segundos para mostrar el nodo
+        pintarNodo(id, "lightblue");
+
+        if (indice == palabra.length()) {
+            // Si se encontró la palabra, pintar recorrido en verde
+            for (int x = 0; x < 4; x++) {
+                for (int y = 0; y < 4; y++) {
+                    if (visitados[x][y]) {
+                        pintarNodo(x + "_" + y, "green");
+                    }
+                }
+            }
+            esperar(2000); // deja la solución visible por 2 segundos
+            // Luego restaurar
+            for (int x = 0; x < 4; x++) {
+                for (int y = 0; y < 4; y++) {
+                    if (visitados[x][y]) {
+                        pintarNodo(x + "_" + y, "lightblue");
+                    }
+                }
+            }
+            return true;
+        }
+
+        NodoAdyacente ady = actual.primero;
+        while (ady != null) {
+            Nodo sig = ady.destino;
+            int f = sig.fila;
+            int c = sig.columna;
+
+            if (!visitados[f][c] && sig.letra == palabra.charAt(indice)) {
+                nodosCola[fin] = sig;
+                indices[fin] = indice + 1;
+                boolean[][] nuevoVisitados = new boolean[4][4];
+                copiarMatriz(visitados, nuevoVisitados);
+                nuevoVisitados[f][c] = true;
+                copiarMatriz(nuevoVisitados, visitadosCola[fin]);
+                fin++;
+            }
+
+            ady = ady.siguiente;
+        }
+    }
+
+    return false;
+}
 }
