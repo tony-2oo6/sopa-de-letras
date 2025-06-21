@@ -102,21 +102,29 @@ public class Buscar2 extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        respuesta.setText("");
+        String info = respuesta.getText();
+        long startTime = System.currentTimeMillis();;
         for (int i=0; i<diccionario.length; i++){
             if (diccionario[i] != null){
                 boolean r = this.grafo.bfs(diccionario[i].toUpperCase());
 
                 if (r==true){
-                    String info = respuesta.getText();
-                    respuesta.setText("Se ha encontrado la plabra: " + diccionario[i].toUpperCase() + "\n" + info);
+                    info = respuesta.getText();
+                    respuesta.setText(info + "Se ha encontrado la plabra: " + diccionario[i].toUpperCase() + "\n");
 
                 }else{
-                    String info = respuesta.getText();
-                    respuesta.setText("No se ha encontrado la plabra: " + diccionario[i].toUpperCase() + "\n" + info);
+                    info = respuesta.getText();
+                    respuesta.setText(info + "No se ha encontrado la plabra: " + diccionario[i].toUpperCase() + "\n");
 
                 }
             }
         }
+        
+        long endTime = System.currentTimeMillis();;
+        long duration = endTime - startTime;
+        
+        respuesta.setText(info + "El tiempo fue:" + (duration / 1000.00) + "Segundos");
         
         
         
@@ -128,21 +136,30 @@ public class Buscar2 extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        respuesta.setText("");
+        String info = respuesta.getText();
+        long startTime = System.currentTimeMillis();
+
         for (int i=0; i<diccionario.length; i++){
             if (diccionario[i] != null){
                 boolean r = this.grafo.dfs(diccionario[i].toUpperCase());
 
                 if (r==true){
-                    String info = respuesta.getText();
-                    respuesta.setText("Se ha encontrado la plabra: " + diccionario[i].toUpperCase() + "\n" + info);
+                    info = respuesta.getText();
+                    respuesta.setText(info + "Se ha encontrado la plabra: " + diccionario[i].toUpperCase() + "\n");
 
                 }else{
-                    String info = respuesta.getText();
-                    respuesta.setText("No se ha encontrado la plabra: " + diccionario[i].toUpperCase() + "\n" + info);
+                    info = respuesta.getText();
+                    respuesta.setText(info + "No se ha encontrado la plabra: " + diccionario[i].toUpperCase() + "\n");
 
                 }
             }
         }
+        
+        long endTime = System.currentTimeMillis();
+        long duration = endTime - startTime;
+        
+        respuesta.setText(info + "El tiempo fue:" + (duration / 1000.00) + "Segundos");
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
