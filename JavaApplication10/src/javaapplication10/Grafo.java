@@ -158,6 +158,21 @@ public class Grafo {
             }
         }
     }
+    
+    
+    
+    public boolean dfs(String palabra) {
+        for (int i = 0; i < nodos.length; i++) {
+            for (int j = 0; j < nodos[0].length; j++) {
+                if (nodos[i][j].letra == palabra.charAt(0)) {
+                    boolean[][] visitados = new boolean[4][4];
+                    visitados[i][j] = true;
+                }
+            }
+        }
+        return false;
+    }
+
 
 
 }
