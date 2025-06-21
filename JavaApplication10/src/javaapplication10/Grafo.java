@@ -78,6 +78,13 @@ public class Grafo {
         origen.primero = nuevo;
     }
     
+    /**
+     * Realiza una búsqueda en anchura (BFS) para determinar si una palabra puede ser formada
+     * siguiendo caminos de letras adyacentes en el grafo, sin repetir celdas.
+     * 
+     * @param palabra La palabra que se desea buscar.
+     * @return true si la palabra puede formarse, false en caso contrario.
+     */
     public boolean bfs(String palabra) {
         int maxCola = 1000;
         Nodo[] nodosCola = new Nodo[maxCola];
@@ -138,6 +145,12 @@ public class Grafo {
         return false;
     }
     
+    /**
+     * Copia el contenido de una matriz booleana a otra.
+     * 
+     * @param origen  Matriz original que se va a copiar.
+     * @param destino Matriz destino donde se colocará la copia.
+     */
     private void copiarMatriz(boolean[][] origen, boolean[][] destino) {
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
