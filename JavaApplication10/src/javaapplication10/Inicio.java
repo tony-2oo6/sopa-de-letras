@@ -25,7 +25,7 @@ public class Inicio extends javax.swing.JFrame {
     char[][] tablero;
     String[] diccionario;
     int[] totalDic;
-    Grafo grafo;
+    Grafo grafo = null;
     /**
      * Creates new form Inicio
      */
@@ -91,13 +91,21 @@ public class Inicio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        Buscar2 buscar = new Buscar2();
-        buscar.setVisible(true);
+        if (grafo != null){
+            Buscar2 buscar = new Buscar2();
+            buscar.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(this, "Debe cargar un archivo primero", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        buscar1 buscar = new buscar1();
-        buscar.setVisible(true);
+        if (grafo != null){
+            buscar1 buscar = new buscar1(grafo);
+            buscar.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(this, "Debe cargar un archivo primero", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
