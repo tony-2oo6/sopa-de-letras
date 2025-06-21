@@ -8,13 +8,38 @@ package javaapplication10;
  *
  * @author Antonio Yibirin, Nicolas Mendez
  */
+
+
+/**
+ * Representa un grafo en forma de matriz 4x4 donde cada celda contiene un nodo con una letra.
+ * 
+ * Los nodos se conectan con sus 8 vecinos adyacentes (horizontal, vertical y diagonal).
+ * 
+ */
 public class Grafo {
+    
+    /**
+    *   Declaracion de Variable
+    */
     Nodo[][] nodos = new Nodo[4][4]; // Matriz de nodos (grafo implícito en forma de matriz)
     
+    
+     /**
+     * Construye el grafo a partir de una matriz de caracteres, creando los nodos
+     * y conectando sus adyacencias.
+     * 
+     * @param tablero Una matriz de 4x4 caracteres que representa el tablero de letras.
+     */
     public Grafo(char[][] tablero) {
         construirGrafo(tablero);
     }
-
+    
+    
+    /**
+     * Crea los nodos del grafo y establece sus adyacencias con vecinos válidos.
+     * 
+     * @param tablero La matriz de letras que sirve de base para crear los nodos.
+     */
     public void construirGrafo(char[][] tablero) {
         // Crear nodos
         for (int i = 0; i < 4; i++) {
@@ -40,7 +65,13 @@ public class Grafo {
             }
         }
     }
-
+    
+    /**
+     * Agrega un nodo adyacente a la lista de adyacentes del nodo de origen.
+     * 
+     * @param origen  Nodo al que se le va a agregar una adyacencia.
+     * @param destino Nodo adyacente que se va a conectar.
+     */
     private void agregarAdyacente(Nodo origen, Nodo destino) {
         NodoAdyacente nuevo = new NodoAdyacente(destino);
         nuevo.siguiente = origen.primero;
