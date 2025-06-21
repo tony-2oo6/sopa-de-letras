@@ -160,7 +160,13 @@ public class Grafo {
     }
     
     
-    
+    /**
+    * Realiza una búsqueda en profundidad (DFS) para verificar si una palabra puede ser
+    * formada en el grafo siguiendo caminos de letras adyacentes, sin repetir nodos.
+    * 
+    * @param palabra La palabra que se desea buscar.
+    * @return true si la palabra puede ser construida a partir de letras adyacentes, false en caso contrario.
+    */
     public boolean dfs(String palabra) {
         for (int i = 0; i < nodos.length; i++) {
             for (int j = 0; j < nodos[0].length; j++) {
@@ -176,6 +182,15 @@ public class Grafo {
         return false;
     }
     
+    /**
+    * Método recursivo auxiliar para realizar la búsqueda en profundidad desde un nodo dado.
+    * 
+    * @param actual   Nodo actual en la búsqueda.
+    * @param palabra  Palabra objetivo que se está buscando.
+    * @param indice   Índice actual de la letra que se debe buscar en la palabra.
+    * @param visitados Matriz booleana que indica qué nodos ya han sido visitados.
+    * @return true si se puede completar la palabra desde este punto, false en caso contrario.
+    */
     private boolean dfsDesde(Nodo actual, String palabra, int indice, boolean[][] visitados) {
         if (indice == palabra.length()) {
             return true;
